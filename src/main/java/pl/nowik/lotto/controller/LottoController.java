@@ -10,8 +10,8 @@ public class LottoController {
 
     @GET
     @Path("/lotto/stats")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String stats() {
         return "Hello RESTEasy";
     }
 }
