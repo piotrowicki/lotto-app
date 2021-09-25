@@ -30,7 +30,7 @@ public class LottoServiceTest {
     LottoRepository repository;
 
     @Test
-    public void test() {
+    public void shouldCalculateStatisticTest() {
         // given
         LottoEntity entity = new LottoEntity();
         entity.setNumbers("1 2 3 4 5 5");
