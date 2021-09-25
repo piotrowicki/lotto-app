@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build application') {
             steps {
-                sh 'mvn clean compile package'
+                sh 'mvn clean compile package -DskipTests=true'
             }
         }
         stage('Build image') {
