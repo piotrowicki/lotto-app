@@ -5,13 +5,24 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
 @Table(name = "DRAW_DL")
-public class LottoEntity extends PanacheEntity {
+@NamedQuery(name = "Lotto.findByNumbersAndDrawDate", query = "from LottoEntity where numbers = ?1 and drawDate = ?2")
+public class LottoEntity extends PanacheEntityBase {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "NUMBERS")
     private String numbers;
@@ -24,6 +35,14 @@ public class LottoEntity extends PanacheEntity {
 
     @Column(name = "UPDATE_DATE", columnDefinition = "DATETIME")
     private LocalDateTime updateDate;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNumbers() {
         return this.numbers;
@@ -45,15 +64,17 @@ public class LottoEntity extends PanacheEntity {
         return this.createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
     public LocalDateTime getUpdateDate() {
         return this.updateDate;
     }
 
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
+    @PrePersist
+    public void prePersist() {
+        createDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updateDate = LocalDateTime.now();
     }
 }
