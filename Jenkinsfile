@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-        timeout(time: 20, unit: 'MINUTES') 
+        timeout(time: 20, unit: 'MINUTES')
     }
     tools {
         maven 'Maven 3.6.3'
@@ -23,6 +23,11 @@ pipeline {
         stage('Build image') {
             steps {
                 sh 'docker build -f src/main/docker/Dockerfile.jvm -t ${IMAGE_NAME} .'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker service update --force lotto_app'
             }
         }
     }
