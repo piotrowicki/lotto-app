@@ -43,7 +43,7 @@ public class LottoAPIReader {
                 entity.persist();
                 LOG.info("Lotto draw saved!.");
             } else {
-                LOG.info(String.format("Result: %s already exist.", result));
+                LOG.info(String.format("Result already exist doing nothing.", result));
             }
 
         } catch (IOException e) {
