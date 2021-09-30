@@ -33,7 +33,7 @@ public class LottoAPIReader {
     void readAndSave() {
         try {
             String result = getUrlLottoResult();
-            LOG.info(String.format("Read result: %s", result));
+            LOG.info(String.format("Read result: {}.", result));
 
             LottoEntity entity = toEntity(result);
             LottoEntity dbEntity = LottoEntity
@@ -41,7 +41,9 @@ public class LottoAPIReader {
 
             if (dbEntity == null) {
                 entity.persist();
-                LOG.info("Lotto draw saved.");
+                LOG.info("Lotto draw saved!.");
+            } else {
+                LOG.info(String.format("Result: {} already exist.", result));
             }
 
         } catch (IOException e) {
