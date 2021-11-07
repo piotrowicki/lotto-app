@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import pl.nowik.lotto.service.LottoService;
 
 @Path("/api")
+@Produces(MediaType.APPLICATION_JSON)
 public class LottoController {
 
     @Inject
@@ -17,7 +18,6 @@ public class LottoController {
 
     @GET
     @Path("/lotto/stats")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response stats() {
         return Response.ok(service.calculateStats()).build();
     }
