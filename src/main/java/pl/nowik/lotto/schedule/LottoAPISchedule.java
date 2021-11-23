@@ -1,12 +1,6 @@
 package pl.nowik.lotto.schedule;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,7 +17,8 @@ public class LottoAPISchedule {
 
     private static final Logger LOG = Logger.getLogger(LottoAPISchedule.class);
 
-    private static final String LOTTO_URL = "http://app.lotto.pl/wyniki/?type=dl";
+    @Inject
+    LottoAPIReader lottoAPIReader;
 
     @Inject
     LottoService lottoService;
@@ -31,38 +26,18 @@ public class LottoAPISchedule {
     @Transactional
     @Scheduled(every = "7h")
     void readAndSave() {
-        try {
-            String result = getUrlLottoResult();
-            LOG.info(String.format("Read result: %s.", result));
-
-            LottoEntity entity = toEntity(result);
-            LottoEntity dbEntity = LottoEntity
-                    .find("#Lotto.findByNumbersAndDrawDate", entity.getNumbers(), entity.getDrawDate()).firstResult();
-
-            if (dbEntity == null) {
-                entity.persist();
-                LOG.info("Lotto draw saved!.");
-            } else {
-                LOG.info(String.format("Result already exist doing nothing.", result));
-            }
-
-        } catch (IOException e) {
-            LOG.info(String.format("Problem with processing data from %s", LOTTO_URL));
-        }
+        lottoAPIReader.getUrlLottoResult().map(this::toEntity).ifPresentOrElse(this::saveIfNotExist, () -> {
+            LOG.info("Result already exist doing nothing.");
+        });
     }
 
-    private String getUrlLottoResult() throws IOException {
-        URL url = new URL(LOTTO_URL);
-        URLConnection connection = url.openConnection();
-        String location = connection.getHeaderField("Location");
-
-        if (location != null) {
-            connection = new URL(location).openConnection();
-        }
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-        return reader.lines().collect(Collectors.joining(" "));
+    private void saveIfNotExist(LottoEntity entity) {
+        lottoService.findByNumbersAndDrawDate(entity.getNumbers(), entity.getDrawDate()).ifPresentOrElse(result -> {
+            LOG.info(String.format("Result already exist doing nothing.", result));
+        }, () -> {
+            entity.persist();
+            LOG.info(String.format("Lotto draw saved!.", entity));
+        });
     }
 
     private LottoEntity toEntity(String result) {
