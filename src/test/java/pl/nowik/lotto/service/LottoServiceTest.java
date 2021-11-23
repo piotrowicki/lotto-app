@@ -16,9 +16,9 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
+import pl.nowik.lotto.dto.LottoStatisticDto;
 import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.repository.LottoRepository;
-import pl.nowik.lotto.service.LottoService.LottoStatisticDto;
 
 @QuarkusTest
 public class LottoServiceTest {
