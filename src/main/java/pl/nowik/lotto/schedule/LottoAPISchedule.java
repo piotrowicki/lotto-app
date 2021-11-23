@@ -19,9 +19,9 @@ import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.service.LottoService;
 
 @ApplicationScoped
-public class LottoAPIReader {
+public class LottoAPISchedule {
 
-    private static final Logger LOG = Logger.getLogger(LottoAPIReader.class);
+    private static final Logger LOG = Logger.getLogger(LottoAPISchedule.class);
 
     private static final String LOTTO_URL = "http://app.lotto.pl/wyniki/?type=dl";
 

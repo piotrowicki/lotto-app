@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class LottoAPIReaderTest {
+public class LottoAPIScheduleTest {
 
     @Inject
-    LottoAPIReader reader;
+    LottoAPISchedule reader;
 
     @Test
     void shouldReadDataTest() {
