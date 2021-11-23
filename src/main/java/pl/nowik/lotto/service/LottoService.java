@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import pl.nowik.lotto.dto.LottoDto;
+import pl.nowik.lotto.dto.LottoStatisticDto;
 import pl.nowik.lotto.repository.LottoRepository;
 import pl.nowik.lotto.util.NumberConverterUtil;
 
@@ -34,27 +35,5 @@ public class LottoService {
 
     private List<Integer> getNumbersList() {
         return NumberConverterUtil.collectNumbersList(repository.findAll().list());
-    }
-
-    static class LottoStatisticDto {
-        private String number;
-        private String quantity;
-
-        private LottoStatisticDto(String number, String quantity) {
-            this.number = number;
-            this.quantity = quantity;
-        }
-
-        public static LottoStatisticDto of(String number, String quantity) {
-            return new LottoStatisticDto(number, quantity);
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public String getQuantity() {
-            return quantity;
-        }
     }
 }
