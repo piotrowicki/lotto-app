@@ -33,10 +33,10 @@ public class LottoAPISchedule {
 
     private void saveIfNotExist(LottoEntity entity) {
         lottoService.findByNumbersAndDrawDate(entity.getNumbers(), entity.getDrawDate()).ifPresentOrElse(result -> {
-            LOG.info(String.format("Result already exist doing nothing.", result.getNumbers()));
+            LOG.info(String.format("Result [%s] already exist doing nothing.", result.getNumbers()));
         }, () -> {
             entity.persist();
-            LOG.info(String.format("Lotto draw saved!.", entity.getNumbers()));
+            LOG.info(String.format("Lotto draw [%s] saved!.", entity.getNumbers()));
         });
     }
 
