@@ -26,18 +26,17 @@ public class LottoAPISchedule {
     @Transactional
     @Scheduled(every = "7h")
     void readAndSave() {
-        lottoAPIReader.getUrlLottoResult().map(this::toEntity).ifPresentOrElse(this::saveIfNotExist, () -> {
-            LOG.info("Result already exist doing nothing.");
-        });
+        lottoAPIReader.getUrlLottoResult().map(this::toEntity).ifPresentOrElse(this::saveIfNotExist,
+                () -> LOG.info("Result already exist doing nothing."));
     }
 
     private void saveIfNotExist(LottoEntity entity) {
-        lottoService.findByNumbersAndDrawDate(entity.getNumbers(), entity.getDrawDate()).ifPresentOrElse(result -> {
-            LOG.info(String.format("Result [%s] already exist doing nothing.", result.getNumbers()));
-        }, () -> {
-            entity.persist();
-            LOG.info(String.format("Lotto draw [%s] saved!.", entity.getNumbers()));
-        });
+        LottoEntity.findByNumbersAndDrawDate(entity.numbers, entity.drawDate).ifPresentOrElse(
+                result -> LOG.info(String.format("Result [%s] already exist doing nothing.", result.numbers)),
+                () -> {
+                    entity.persist();
+                    LOG.info(String.format("Lotto draw [%s] saved!.", entity.numbers));
+                });
     }
 
     private LottoEntity toEntity(String result) {
@@ -46,8 +45,8 @@ public class LottoAPISchedule {
         int firstSpace = result.indexOf(" ") + 1;
 
         LottoEntity entity = new LottoEntity();
-        entity.setDrawDate(LocalDate.parse(splittedDraw[0]));
-        entity.setNumbers(result.substring(firstSpace));
+        entity.drawDate = LocalDate.parse(splittedDraw[0]);
+        entity.numbers = result.substring(firstSpace);
         return entity;
     }
 }

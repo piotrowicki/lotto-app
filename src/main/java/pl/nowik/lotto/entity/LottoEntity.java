@@ -2,6 +2,7 @@ package pl.nowik.lotto.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,50 +23,22 @@ public class LottoEntity extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @Column(name = "NUMBERS")
-    private String numbers;
+    public String numbers;
 
     @Column(name = "DRAW_DATE", columnDefinition = "DATE")
-    private LocalDate drawDate;
+    public LocalDate drawDate;
 
     @Column(name = "CREATE_DATE", columnDefinition = "DATETIME")
-    private LocalDateTime createDate;
+    public LocalDateTime createDate;
 
     @Column(name = "UPDATE_DATE", columnDefinition = "DATETIME")
-    private LocalDateTime updateDate;
+    public LocalDateTime updateDate;
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumbers() {
-        return this.numbers;
-    }
-
-    public void setNumbers(String numbers) {
-        this.numbers = numbers;
-    }
-
-    public LocalDate getDrawDate() {
-        return this.drawDate;
-    }
-
-    public void setDrawDate(LocalDate drawDate) {
-        this.drawDate = drawDate;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return this.createDate;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return this.updateDate;
+    public static Optional<LottoEntity> findByNumbersAndDrawDate(String numbers, LocalDate drawDate) {
+        return find("#Lotto.findByNumbersAndDrawDate", numbers, drawDate).firstResultOptional();
     }
 
     @PrePersist

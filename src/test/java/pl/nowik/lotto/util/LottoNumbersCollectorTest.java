@@ -21,7 +21,7 @@ public class LottoNumbersCollectorTest {
     public void test() {
         // given
         LottoEntity entity = new LottoEntity();
-        entity.setNumbers("1 2 3 4 5 6");
+        entity.numbers = "1 2 3 4 5 6";
 
         // when
         List<Integer> result = collector.collectNumbersList(List.of(entity));

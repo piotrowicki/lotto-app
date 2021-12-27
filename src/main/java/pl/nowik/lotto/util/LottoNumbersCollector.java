@@ -12,7 +12,7 @@ import pl.nowik.lotto.entity.LottoEntity;
 public class LottoNumbersCollector {
     public List<Integer> collectNumbersList(List<LottoEntity> entities) {
         return entities.stream()
-                .map(s -> s.getNumbers().split(" "))
+                .map(s -> s.numbers.split(" "))
                 .flatMap(Arrays::stream)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
