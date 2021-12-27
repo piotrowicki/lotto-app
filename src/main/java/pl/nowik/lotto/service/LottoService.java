@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import pl.nowik.lotto.dto.LottoDto;
 import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.repository.LottoRepository;
-import pl.nowik.lotto.util.LottoNumbersCollector;
 
 @ApplicationScoped
 public class LottoService {
