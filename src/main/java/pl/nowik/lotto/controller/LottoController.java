@@ -7,14 +7,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import pl.nowik.lotto.service.LottoStatisticCalculationService;
+import pl.nowik.lotto.service.LottoStatisticsService;
 
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
 public class LottoController {
 
     @Inject
-    LottoStatisticCalculationService service;
+    LottoStatisticsService service;
 
     @GET
     @Path("/lotto/stats")

@@ -14,7 +14,7 @@ import pl.nowik.lotto.repository.LottoRepository;
 import pl.nowik.lotto.util.LottoNumbersCollector;
 
 @RequestScoped
-public class LottoStatisticCalculationService {
+public class LottoStatisticsService {
 
     @Inject
     LottoRepository repository;

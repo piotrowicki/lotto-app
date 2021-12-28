@@ -19,10 +19,10 @@ import pl.nowik.lotto.repository.LottoRepository;
 import pl.nowik.lotto.util.LottoNumbersCollector;
 
 @QuarkusTest
-public class LottoStatisticCalculationServiceTest {
+public class LottoStatisticsServiceTest {
 
     @Inject
-    LottoStatisticCalculationService service;
+    LottoStatisticsService service;
 
     @InjectMock
     LottoRepository repository;
