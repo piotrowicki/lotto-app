@@ -3,17 +3,15 @@ package pl.nowik.lotto.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import pl.nowik.lotto.dto.LottoStatisticDto;
@@ -32,18 +30,13 @@ public class LottoStatisticCalculationServiceTest {
     @InjectMock
     LottoNumbersCollector collector;
 
-    @BeforeEach
-    public void init() {
-        PanacheQuery panacheQuery = mock(PanacheQuery.class);
-        when(repository.findAll()).thenReturn(panacheQuery);
-    }
-
     @Test
     public void shouldGroupByQuantity() {
         // when
         List<Integer> draw = List.of(1, 2, 3, 3, 4, 5);
 
         // when
+        when(repository.listAll()).thenReturn(Collections.emptyList());
         when(collector.collectNumbersList(anyList())).thenReturn(draw);
 
         List<LottoStatisticDto> result = service.calculateStats();

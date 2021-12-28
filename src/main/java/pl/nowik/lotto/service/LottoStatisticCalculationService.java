@@ -32,6 +32,6 @@ public class LottoStatisticCalculationService {
     }
 
     private List<Integer> getNumbersList() {
-        return collector.collectNumbersList(repository.findAll().list());
+        return collector.collectNumbersList(repository.listAll());
     }
 }
