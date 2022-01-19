@@ -30,7 +30,11 @@ public class LottoAPIReader {
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            return Optional.of(reader.lines().collect(Collectors.joining(" ")));
+            String result = reader.lines().collect(Collectors.joining(" "));
+
+            LOG.info(String.format("Line read: [%s].", result));
+            
+            return Optional.of(result);
         } catch (IOException ex) {
             LOG.info(String.format("Problem with processing data from %s", LOTTO_URL));
             return Optional.empty();
