@@ -1,6 +1,7 @@
 package pl.nowik.lotto.schedule;
 
 import java.time.LocalDate;
+import java.util.function.Predicate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 import io.quarkus.scheduler.Scheduled;
+import pl.nowik.lotto.converter.LottoResultConverter;
 import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.service.LottoService;
 
@@ -17,36 +19,24 @@ public class LottoAPISchedule {
 
     private static final Logger LOG = Logger.getLogger(LottoAPISchedule.class);
 
+    private static final Predicate<String> IS_VALID = s -> s.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}[0-9 ]+$");
+
     @Inject
     LottoAPIReader lottoAPIReader;
 
     @Inject
     LottoService lottoService;
 
+    @Inject
+    LottoResultConverter converter;
+
     @Transactional
     @Scheduled(every = "7h")
     void readAndSave() {
-        lottoAPIReader.getUrlLottoResult().map(this::toEntity).ifPresentOrElse(this::saveIfNotExist,
-                () -> LOG.info("Result already exist doing nothing."));
-    }
-
-    private void saveIfNotExist(LottoEntity entity) {
-        LottoEntity.findByNumbersAndDrawDate(entity.numbers, entity.drawDate).ifPresentOrElse(
-                result -> LOG.info(String.format("Result [%s] already exist doing nothing.", result.numbers)),
-                () -> {
-                    entity.persist();
-                    LOG.info(String.format("Lotto draw [%s] saved!.", entity.numbers));
-                });
-    }
-
-    private LottoEntity toEntity(String result) {
-        String[] splittedDraw = result.split(" ");
-
-        int firstSpace = result.indexOf(" ") + 1;
-
-        LottoEntity entity = new LottoEntity();
-        entity.drawDate = LocalDate.parse(splittedDraw[0]);
-        entity.numbers = result.substring(firstSpace);
-        return entity;
+        lottoAPIReader.getUrlLottoResult()
+                .filter(IS_VALID)
+                .map(converter::toEntity)
+                .ifPresentOrElse(entity -> lottoService.saveIfNotExist(entity),
+                        () -> LOG.info("Result already exist doing nothing."));
     }
 }
