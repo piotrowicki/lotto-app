@@ -31,7 +31,7 @@ public class LottoAPISchedule {
     LottoResultConverter converter;
 
     @Transactional
-    @Scheduled(every = "0 0 23 * * ?")
+    @Scheduled(cron = "0 0 23 * * ?")
     void readAndSave() {
         lottoAPIReader.getUrlLottoResult()
                 .filter(IS_VALID)
