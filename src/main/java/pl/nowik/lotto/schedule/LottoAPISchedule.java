@@ -31,7 +31,7 @@ public class LottoAPISchedule {
     LottoResultConverter converter;
 
     @Transactional
-    @Scheduled(every = "7h")
+    @Scheduled(every = "1d")
     void readAndSave() {
         lottoAPIReader.getUrlLottoResult()
                 .filter(IS_VALID)
