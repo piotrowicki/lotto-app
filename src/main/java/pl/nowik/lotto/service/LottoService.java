@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.jboss.logging.Logger;
 
@@ -23,7 +24,7 @@ public class LottoService {
         return repository.findAll().project(LottoDto.class).list();
     }
 
-    public void saveIfNotExist(LottoEntity entity) {
+    public void saveIfNotExist(@Valid LottoEntity entity) {
         LottoEntity.findByNumbersAndDrawDate(entity.numbers, entity.drawDate)
                 .ifPresentOrElse(
                         result -> LOG.info(String.format("Result [%s] already exist doing nothing.", result.numbers)),

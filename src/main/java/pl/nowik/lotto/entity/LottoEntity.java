@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
@@ -25,12 +26,15 @@ public class LottoEntity extends PanacheEntityBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
+    @NotNull
     @Column(name = "NUMBERS")
     public String numbers;
 
+    @NotNull
     @Column(name = "DRAW_DATE", columnDefinition = "DATE")
     public LocalDate drawDate;
 
+    @NotNull
     @Column(name = "CREATE_DATE", columnDefinition = "DATETIME")
     public LocalDateTime createDate;
 
