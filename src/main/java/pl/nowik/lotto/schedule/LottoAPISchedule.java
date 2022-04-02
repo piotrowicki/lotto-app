@@ -1,6 +1,5 @@
 package pl.nowik.lotto.schedule;
 
-import java.time.LocalDate;
 import java.util.function.Predicate;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,7 +10,6 @@ import org.jboss.logging.Logger;
 
 import io.quarkus.scheduler.Scheduled;
 import pl.nowik.lotto.converter.LottoResultConverter;
-import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.service.LottoService;
 
 @ApplicationScoped
