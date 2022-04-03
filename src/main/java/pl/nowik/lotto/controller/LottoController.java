@@ -7,6 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import pl.nowik.lotto.service.LottoService;
 import pl.nowik.lotto.service.LottoStatisticsService;
 
 @Path("/api")
@@ -14,11 +15,20 @@ import pl.nowik.lotto.service.LottoStatisticsService;
 public class LottoController {
 
     @Inject
-    LottoStatisticsService service;
+    LottoService service;
+
+    @Inject
+    LottoStatisticsService statsService;
 
     @GET
     @Path("/lotto/stats")
     public Response stats() {
-        return Response.ok(service.calculateStats()).build();
+        return Response.ok(statsService.calculateStats()).build();
+    }
+
+    @GET
+    @Path("/lotto/last")
+    public Response getLastDraw() {
+        return Response.ok(service.getLastByCreateDate()).build();
     }
 }

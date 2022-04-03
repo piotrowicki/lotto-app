@@ -19,6 +19,10 @@ public class LottoService {
         return LottoEntity.findAll().project(LottoDto.class).list();
     }
 
+    public LottoEntity getLastByCreateDate() {
+        return LottoEntity.getLastByDrawDate();
+    }
+
     public void saveIfNotExist(@Valid LottoEntity entity) {
         LottoEntity.findByNumbersAndDrawDate(entity.numbers, entity.drawDate)
                 .ifPresentOrElse(

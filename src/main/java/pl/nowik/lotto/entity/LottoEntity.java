@@ -45,6 +45,12 @@ public class LottoEntity extends PanacheEntityBase {
         return find("#Lotto.findByNumbersAndDrawDate", numbers, drawDate).firstResultOptional();
     }
 
+    public static LottoEntity getLastByDrawDate() {
+        return (LottoEntity) getEntityManager()
+                .createNativeQuery("SELECT * FROM DRAW_DL ORDER BY DRAW_DATE DESC LIMIT 1", LottoEntity.class)
+                .getSingleResult();
+    }
+
     @PrePersist
     public void prePersist() {
         createDate = LocalDateTime.now();
