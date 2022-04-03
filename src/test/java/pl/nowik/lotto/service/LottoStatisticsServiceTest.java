@@ -12,12 +12,13 @@ import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.panache.mock.PanacheMock;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import pl.nowik.lotto.config.DatabaseConfig;
 import pl.nowik.lotto.dto.LottoStatisticDto;
-import pl.nowik.lotto.repository.LottoRepository;
+import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.util.LottoNumbersCollector;
 
 @QuarkusTest
@@ -28,18 +29,18 @@ public class LottoStatisticsServiceTest {
     LottoStatisticsService service;
 
     @InjectMock
-    LottoRepository repository;
-
-    @InjectMock
     LottoNumbersCollector collector;
 
     @Test
     public void shouldGroupByQuantity() {
+        // given
+        PanacheMock.mock(LottoEntity.class);
+
         // when
         List<Integer> draw = List.of(1, 2, 3, 3, 4, 5);
 
         // when
-        when(repository.listAll()).thenReturn(Collections.emptyList());
+        when(LottoEntity.listAll()).thenReturn(Collections.emptyList());
         when(collector.collectNumbersList(anyList())).thenReturn(draw);
 
         List<LottoStatisticDto> result = service.calculateStats();

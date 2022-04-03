@@ -3,25 +3,20 @@ package pl.nowik.lotto.service;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.jboss.logging.Logger;
 
 import pl.nowik.lotto.dto.LottoDto;
 import pl.nowik.lotto.entity.LottoEntity;
-import pl.nowik.lotto.repository.LottoRepository;
 
 @ApplicationScoped
 public class LottoService {
 
     private static final Logger LOG = Logger.getLogger(LottoService.class);
 
-    @Inject
-    LottoRepository repository;
-
     public List<LottoDto> findAll() {
-        return repository.findAll().project(LottoDto.class).list();
+        return LottoEntity.findAll().project(LottoDto.class).list();
     }
 
     public void saveIfNotExist(@Valid LottoEntity entity) {

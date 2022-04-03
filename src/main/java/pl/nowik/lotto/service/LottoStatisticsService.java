@@ -10,14 +10,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import pl.nowik.lotto.dto.LottoStatisticDto;
-import pl.nowik.lotto.repository.LottoRepository;
+import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.util.LottoNumbersCollector;
 
 @RequestScoped
 public class LottoStatisticsService {
-
-    @Inject
-    LottoRepository repository;
 
     @Inject
     LottoNumbersCollector collector;
@@ -32,6 +29,6 @@ public class LottoStatisticsService {
     }
 
     private List<Integer> getNumbersList() {
-        return collector.collectNumbersList(repository.listAll());
+        return collector.collectNumbersList(LottoEntity.listAll());
     }
 }
