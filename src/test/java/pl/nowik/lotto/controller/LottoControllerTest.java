@@ -19,7 +19,8 @@ public class LottoControllerTest {
     @Test
     public void testHelloEndpoint() {
         given()
-                .when().get("/lotto/stats")
+                .when()
+                .get("/lotto/stats")
                 .then()
                 .statusCode(200);
     }
