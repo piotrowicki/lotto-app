@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import pl.nowik.lotto.config.DatabaseConfig;
+import pl.nowik.lotto.dto.LottoDto;
 import pl.nowik.lotto.entity.LottoEntity;
 
 @QuarkusTest
@@ -37,9 +38,10 @@ public class LottoServiceTest {
         second.persist();
 
         // when
-        LottoEntity result = LottoEntity.getLastByDrawDate();
+        LottoDto result = service.getLastByDrawDate();
 
         // then
-        assertEquals(result, second);
+        assertEquals(result.numbers, second.numbers);
+        assertEquals(result.drawDate, second.drawDate);
     }
 }

@@ -29,6 +29,6 @@ public class LottoController {
     @GET
     @Path("/lotto/last")
     public Response getLastDraw() {
-        return Response.ok(service.getLastByCreateDate()).build();
+        return Response.ok(service.getLastByDrawDate()).build();
     }
 }

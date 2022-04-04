@@ -4,15 +4,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import io.quarkus.runtime.annotations.RegisterForReflection;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+import pl.nowik.lotto.entity.LottoEntity;
+
+@JsonInclude(Include.NON_NULL)
 @RegisterForReflection
 public class LottoDto {
 
-    private final String numbers;
-    private final LocalDate drawDate;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+    public final String numbers;
+    public final LocalDate drawDate;
+    public final LocalDateTime createDate;
+    public final LocalDateTime updateDate;
 
     public LottoDto(String numbers, LocalDate drawDate, LocalDateTime createDate, LocalDateTime updateDate) {
         this.numbers = numbers;
@@ -21,20 +26,12 @@ public class LottoDto {
         this.updateDate = updateDate;
     }
 
-    public String getNumbers() {
-        return this.numbers;
+    public LottoDto(String numbers, LocalDate drawDate) {
+        this(numbers, drawDate, null, null);
     }
 
-    public LocalDate getDrawDate() {
-        return this.drawDate;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return this.createDate;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return this.updateDate;
+    public static LottoDto of(LottoEntity entity) {
+        return new LottoDto(entity.numbers, entity.drawDate);
     }
 
     @Override
