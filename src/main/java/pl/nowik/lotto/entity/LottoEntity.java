@@ -34,7 +34,6 @@ public class LottoEntity extends PanacheEntityBase {
     @Column(name = "DRAW_DATE", columnDefinition = "DATE")
     public LocalDate drawDate;
 
-    @NotNull
     @Column(name = "CREATE_DATE", columnDefinition = "DATETIME")
     public LocalDateTime createDate;
 
