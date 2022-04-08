@@ -1,11 +1,13 @@
 package pl.nowik.lotto.service;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +26,7 @@ public class LottoServiceTest {
 
     @Test
     @Transactional
-    public void testFindLastDraw() {
+    public void shouldReturnLastDraw() {
         // given
         LottoEntity first = new LottoEntity();
         first.numbers = "1 2 3 4 5 6";
@@ -43,5 +45,42 @@ public class LottoServiceTest {
         // then
         assertEquals(result.numbers, second.numbers);
         assertEquals(result.drawDate, second.drawDate);
+    }
+
+    @Test
+    @Transactional
+    public void shouldSaveValidData() {
+        // given
+        LottoEntity entity = new LottoEntity();
+        entity.numbers = "1 2 3 4 5 6";
+        entity.drawDate = LocalDate.of(2022, 1, 1);
+
+        // when
+        service.saveIfNotExist(entity);
+
+        // then
+        assertEquals(LottoEntity.count(), 1);
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnExceptionWhenNumbersMissing() {
+        // given
+        LottoEntity entity = new LottoEntity();
+        entity.drawDate = LocalDate.of(2022, 1, 1);
+
+        // when
+        assertThrows(ConstraintViolationException.class, () -> service.saveIfNotExist(entity));
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnExceptionWhenDrawDateMissing() {
+        // given
+        LottoEntity entity = new LottoEntity();
+        entity.numbers = "1 2 3 4 5 6";
+
+        // when
+        assertThrows(ConstraintViolationException.class, () -> service.saveIfNotExist(entity));
     }
 }
