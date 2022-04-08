@@ -59,7 +59,7 @@ public class LottoServiceTest {
         service.saveIfNotExist(entity);
 
         // then
-        assertEquals(LottoEntity.count(), 1);
+        assertEquals(1, LottoEntity.count());
     }
 
     @Test
@@ -79,6 +79,17 @@ public class LottoServiceTest {
         // given
         LottoEntity entity = new LottoEntity();
         entity.numbers = "1 2 3 4 5 6";
+
+        // when
+        assertThrows(ConstraintViolationException.class, () -> service.saveIfNotExist(entity));
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnExceptionWhenDrawFormatIsWrong() {
+        // given
+        LottoEntity entity = new LottoEntity();
+        entity.numbers = "2022-01-01";
 
         // when
         assertThrows(ConstraintViolationException.class, () -> service.saveIfNotExist(entity));

@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
@@ -27,6 +28,7 @@ public class LottoEntity extends PanacheEntityBase {
     public Long id;
 
     @NotNull
+    @Pattern(regexp = "^[0-9 ]+$")
     @Column(name = "NUMBERS")
     public String numbers;
 

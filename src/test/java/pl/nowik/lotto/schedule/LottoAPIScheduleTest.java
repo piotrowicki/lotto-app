@@ -1,7 +1,6 @@
 package pl.nowik.lotto.schedule;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,18 +45,5 @@ public class LottoAPIScheduleTest {
 
         // then
         verify(service).saveIfNotExist(any(LottoEntity.class));
-    }
-
-    @Test
-    public void shouldNotSaveInvalidDateAsResult() {
-        // given
-        Optional<String> result = Optional.of("2022-01-01");
-
-        // when
-        when(reader.getUrlLottoResult()).thenReturn(result);
-        schedule.readAndSave();
-
-        // then
-        verify(service, never()).saveIfNotExist(any(LottoEntity.class));
     }
 }
