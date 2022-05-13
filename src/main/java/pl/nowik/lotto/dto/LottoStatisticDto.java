@@ -9,8 +9,8 @@ public class LottoStatisticDto {
         this.quantity = quantity;
     }
 
-    public static LottoStatisticDto of(String number, String quantity) {
-        return new LottoStatisticDto(number, quantity);
+    public static LottoStatisticDto of(Integer number, Long quantity) {
+        return new LottoStatisticDto(String.valueOf(number), String.valueOf(quantity));
     }
 
     public String getNumber() {

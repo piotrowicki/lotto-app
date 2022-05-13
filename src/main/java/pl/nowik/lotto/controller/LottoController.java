@@ -31,4 +31,16 @@ public class LottoController {
     public Response getLastDraw() {
         return Response.ok(service.getLastByDrawDate()).build();
     }
+
+    @GET
+    @Path("/lotto/most-common")
+    public Response getMostCommon() {
+        return Response.ok(statsService.getMostCommon()).build();
+    }
+
+    @GET
+    @Path("/lotto/least-common")
+    public Response getLowerSix() {
+        return Response.ok(statsService.getLeastCommon()).build();
+    }
 }

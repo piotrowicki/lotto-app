@@ -1,7 +1,8 @@
 package pl.nowik.lotto.service;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,15 +21,35 @@ public class LottoStatisticsService {
     LottoNumbersCollector collector;
 
     public List<LottoStatisticDto> calculateStats() {
-        Map<Integer, Long> statistic = getNumbersList().stream()
-                .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.counting()));
-
-        return statistic.entrySet().stream()
-                .map(entry -> LottoStatisticDto.of(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())))
+        return getGroupedNumbers().entrySet().stream()
+                .map(entry -> LottoStatisticDto.of(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    private TreeMap<Integer, Long> getGroupedNumbers() {
+        return getNumbersList().stream()
+                .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.counting()));
     }
 
     private List<Integer> getNumbersList() {
         return collector.collectNumbersList(LottoEntity.listAll());
+    }
+
+    public List<LottoStatisticDto> getMostCommon() {
+        return getSixComparingBy(Entry.<Integer, Long>comparingByValue().reversed());
+    }
+
+    public List<LottoStatisticDto> getLeastCommon() {
+        return getSixComparingBy(Entry.<Integer, Long>comparingByValue());
+    }
+
+    private List<LottoStatisticDto> getSixComparingBy(Comparator<Entry<Integer, Long>> comparator) {
+        return getGroupedNumbers()
+                .entrySet()
+                .stream()
+                .sorted(comparator)
+                .limit(6)
+                .map(entry -> LottoStatisticDto.of(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
