@@ -27,20 +27,20 @@ public class LottoController {
     }
 
     @GET
-    @Path("/lotto/last")
+    @Path("/lotto/stats/last")
     public Response getLastDraw() {
         return Response.ok(service.getLastByDrawDate()).build();
     }
 
     @GET
-    @Path("/lotto/most-common")
+    @Path("/lotto/stats/most-common")
     public Response getMostCommon() {
         return Response.ok(statsService.getMostCommon()).build();
     }
 
     @GET
-    @Path("/lotto/least-common")
-    public Response getLowerSix() {
+    @Path("/lotto/stats/least-common")
+    public Response getLeastCommon() {
         return Response.ok(statsService.getLeastCommon()).build();
     }
 }

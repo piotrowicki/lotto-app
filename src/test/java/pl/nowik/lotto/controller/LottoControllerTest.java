@@ -31,7 +31,7 @@ public class LottoControllerTest {
     public void testLottoLastEndpoint() {
         given()
                 .when()
-                .get("/lotto/last")
+                .get("/lotto/stats/last")
                 .then()
                 .statusCode(200);
     }
@@ -40,7 +40,7 @@ public class LottoControllerTest {
     public void testLottoMostCommonEndpoint() {
         given()
                 .when()
-                .get("/lotto/most-common")
+                .get("/lotto/stats/most-common")
                 .then()
                 .statusCode(200);
     }
@@ -49,7 +49,7 @@ public class LottoControllerTest {
     public void testLottoLeastCommonEndpoint() {
         given()
                 .when()
-                .get("/lotto/least-common")
+                .get("/lotto/stats/least-common")
                 .then()
                 .statusCode(200);
     }
