@@ -2,6 +2,7 @@ package pl.nowik.lotto.controller;
 
 import static io.restassured.RestAssured.given;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -17,10 +18,38 @@ public class LottoControllerTest {
     LottoStatisticsService service;
 
     @Test
-    public void testHelloEndpoint() {
+    public void testLottoStatsEndpoint() {
         given()
                 .when()
                 .get("/lotto/stats")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @Disabled(value = "Due to NoResultException.")
+    public void testLottoLastEndpoint() {
+        given()
+                .when()
+                .get("/lotto/last")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testLottoMostCommonEndpoint() {
+        given()
+                .when()
+                .get("/lotto/most-common")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testLottoLeastCommonEndpoint() {
+        given()
+                .when()
+                .get("/lotto/least-common")
                 .then()
                 .statusCode(200);
     }
