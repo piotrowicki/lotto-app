@@ -9,11 +9,11 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import pl.nowik.lotto.config.DatabaseConfig;
 
 @QuarkusTest
-@QuarkusTestResource(DatabaseConfig.class)
+@QuarkusTestResource(H2DatabaseTestResource.class)
 public class LottoAPIReaderTest {
 
     @Inject

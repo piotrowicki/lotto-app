@@ -11,15 +11,15 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
-import pl.nowik.lotto.config.DatabaseConfig;
 import pl.nowik.lotto.converter.LottoResultConverter;
 import pl.nowik.lotto.entity.LottoEntity;
 import pl.nowik.lotto.service.LottoService;
 
 @QuarkusTest
-@QuarkusTestResource(DatabaseConfig.class)
+@QuarkusTestResource(H2DatabaseTestResource.class)
 public class LottoAPIScheduleTest {
 
     @Inject
